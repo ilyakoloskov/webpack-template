@@ -1,4 +1,6 @@
 import './main.sass'
-import './fonts/fonts.sass'
 
-alert('hello KOLOS')
+
+// const body = document.querySelector('.body')
+
+// body.style.background = 'red'
