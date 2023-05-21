@@ -5,6 +5,9 @@
       {
         "modules": false
       }
-    ]
+    ],
+    ["vue"]
+    // ["@babel-preset-vue"],
+    // ["vue"]
   ]
 }

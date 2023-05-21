@@ -1,6 +1,6 @@
+import { createApp } from 'vue'
+import App from './components/App.vue'
+
 import './main.sass'
 
-
-// const body = document.querySelector('.body')
-
-// body.style.background = 'red'
+const app = createApp(App).mount('#app')

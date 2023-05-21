@@ -8,6 +8,8 @@ const FileManagerPlugin = require('filemanager-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // ImageMinimizerPlugin - плагин для оптимизации растровых изображений
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin')
+// VueLoaderPlugin - плагин для чтения и загрузки .vue файлов
+const { VueLoaderPlugin } = require('vue-loader')
 
 // ВСЕ НАСТРОЙКИ ВЕБПАКА ПОМЕЩАЕМ В ОБЪЕКТ module.exports
 
@@ -20,7 +22,7 @@ module.exports = {
     // filename - итоговый файл, в который компилируется вся сборка.
     filename: 'index.[contenthash:7].js',
     // assetModuleFileName это тип модуля, который позволяет работать с ассетами "из коробки" без установки дополнительных загрузчиков.
-    assetModuleFilename: path.join('images', '[name].[contenthash][ext]'),
+    assetModuleFilename: path.join('assets/images', '[name].[contenthash][ext]'),
   },
 
   module: {
@@ -32,6 +34,10 @@ module.exports = {
         use: 'babel-loader',
         // Кроме каталога, который указан в свойстве exclude
         exclude: /node_modules/,
+      },
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
       },
       {
         test: /\.html$/,
@@ -46,26 +52,29 @@ module.exports = {
         // css-loader загрузчик CSS-файлов
         // style-loader загрузчик стилей в DOM
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'],
+        generator: {
+          filename: path.join('assets/', '[name].[contenthash][ext]'),
+        },
       },
       {
         test: /\.(png|jpg|jpeg|gif)$/i,
         type: 'asset/resource',
         generator: {
-          filename: path.join('images', '[name].[contenthash][ext]'),
+          filename: path.join('assets/images', '[name].[contenthash][ext]'),
         },
       },
       {
         test: /\.svg$/,
         type: 'asset/resource',
         generator: {
-          filename: path.join('icons', '[name].[contenthash][ext]'),
+          filename: path.join('assets/icons', '[name].[contenthash][ext]'),
         },
       },
       {
         test: /\.(woff2?|eot|ttf|otf)$/i,
         type: 'asset/resource',
         generator: {
-          filename: 'fonts/[name].[contenthash][ext]',
+          filename: 'assets/fonts/[name].[contenthash][ext]',
         },
       },
     ],
@@ -101,6 +110,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash:7].css',
     }),
+    new VueLoaderPlugin(),
   ],
 
   // DEVSERVER КОМПИЛИРУЕТ ИСХОДНЫЙ КОД, И ЗАПИСЫВАЕТ ФАЙЛЫ НЕ НА ДИСК, А В ОПЕРАТИВНУЮ ПАМЯТЬ.
