@@ -1,5 +1,5 @@
 <template>
-  <h1>Hello Vue</h1>
+  <h1>{{ message }}</h1>
   <button @click="count++">Count is: {{ count }}</button>
 </template>
 
@@ -8,6 +8,7 @@ export default {
   data() {
     return {
       count: 0,
+      message: 'Hello Vue',
     }
   },
 }
